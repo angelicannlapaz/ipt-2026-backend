@@ -5,8 +5,7 @@ import cors from 'cors';
 
 import errorHandler from './_middleware/error-handler';
 import accountsController from './accounts/accounts.controller';
-
-const swaggerDocs = require('./_helpers/swagger');
+import swaggerDocs from './_helpers/swagger';
 
 const app = express();
 
