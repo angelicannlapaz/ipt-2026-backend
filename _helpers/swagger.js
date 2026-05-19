@@ -1,11 +1,8 @@
-import express from 'express';
-import swaggerUi from 'swagger-ui-express';
-import YAML from 'yamljs';
-
-const router = express.Router();
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 
-router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-export default router;
+module.exports = function swaggerDocs(app) {
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+};

@@ -5,8 +5,8 @@ import cors from 'cors';
 
 import errorHandler from './_middleware/error-handler';
 import accountsController from './accounts/accounts.controller';
-import swaggerDocs from './_helpers/swagger';
 
+const swaggerDocs = require('./_helpers/swagger');
 
 const app = express();
 
@@ -23,7 +23,9 @@ app.use(cors({
 
 // routes
 app.use('/accounts', accountsController);
-app.use('/api-docs', swaggerDocs);
+
+// swagger
+swaggerDocs(app);
 
 // global error handler
 app.use(errorHandler);
@@ -34,6 +36,6 @@ const port =
         ? process.env.PORT || 80
         : 4000;
 
-app.listen(4000, () =>
+app.listen(port, () =>
     console.log(`Server listening on port ${port}`)
 );
