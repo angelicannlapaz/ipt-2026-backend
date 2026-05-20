@@ -61,6 +61,7 @@ router.post('/refresh-token', refreshToken);
 router.post('/revoke-token', authorize(), revokeTokenSchema, revokeToken);
 router.post('/reset-password', resetPassword);
 router.post('/register', registerSchema, register);
+router.post('/validate-reset-token', validateResetTokenSchema, validateResetToken);
 router.post('/forgot-password', forgotPassword);
 router.post('/verify-email', verifyEmailSchema, verifyEmail);
 router.get('/', authorize(Role.Admin), getAll);
@@ -82,6 +83,23 @@ function _delete(req: any, res: any, next: any) {
 function update(req: any, res: any, next: any) {
     accountService.update(req.params.id, req.body)
         .then(account => res.json(account))
+        .catch(next);
+}
+
+
+/////validate reset pass
+
+function validateResetTokenSchema(req: any, res: any, next: any) {
+    const schema = Joi.object({
+        token: Joi.string().required()
+    });
+
+    validateRequest(schema)(req, res, next);
+}
+
+function validateResetToken(req: any, res: any, next: any) {
+    accountService.validateResetToken(req.body)
+        .then(() => res.json({ message: 'Token is valid' }))
         .catch(next);
 }
 
