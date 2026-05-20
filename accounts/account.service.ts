@@ -152,12 +152,14 @@ async function validateResetToken({ token }: any) {
         where: {
             resetToken: token,
             resetTokenExpires: {
-                [Op.gt]: Date.now()
+                [Op.gt]: new Date()
             }
         }
     });
 
-    if (!account) throw 'Invalid token';
+    if (!account) {
+        throw 'Invalid token';
+    }
 
     return account;
 }
