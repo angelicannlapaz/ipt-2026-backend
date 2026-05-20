@@ -148,14 +148,18 @@ async function forgotPassword({ email }: any, origin: any) {
 
 async function validateResetToken({ token }: any) {
 
+    console.log("TOKEN RECEIVED:", token);
+
     const account = await db.Account.findOne({
         where: {
-            resetToken: token,
+            resetToken: token.toString().trim(),
             resetTokenExpires: {
                 [Op.gt]: new Date()
             }
         }
     });
+
+    console.log("ACCOUNT FOUND:", account);
 
     if (!account) {
         throw 'Invalid token';
