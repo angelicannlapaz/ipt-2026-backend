@@ -28,6 +28,8 @@ export default async function sendEmail({
     from
 }: any) {
 
+    console.log("RESEND KEY EXISTS:", !!process.env.RESEND_API_KEY);
+
     // USE RESEND FIRST
     if (process.env.RESEND_API_KEY) {
         return await sendWithResend({
