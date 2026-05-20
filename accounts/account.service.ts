@@ -272,7 +272,7 @@ async function sendPasswordResetEmail(account: any, origin: any) {
     let message;
 
     if (origin) {
-        const resetUrl = `${origin}/account/reset-password?token=${account.resetToken}`;
+        const resetUrl = `${origin}/account/reset-password?token=${account.resetToken.token}`;
         message = `<p>Reset your password:</p><a href="${resetUrl}">${resetUrl}</a>`;
     } else {
         message = `<p>Token: ${account.resetToken}</p>`;
