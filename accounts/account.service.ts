@@ -143,6 +143,21 @@ async function forgotPassword({ email }: any, origin: any) {
 
     await account.save();
 
+    async function forgotPassword({ email }: any, origin: any) {
+    const account = await db.Account.findOne({ where: { email } });
+    if (!account) return;
+
+    account.resetToken = randomTokenString();
+    account.resetTokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    await account.save();
+    
+    console.log("RESET TOKEN SAVED:", account.resetToken); // ADD THIS
+    console.log("RESET TOKEN EXPIRES:", account.resetTokenExpires); // ADD THIS
+
+    await sendPasswordResetEmail(account, origin);
+}
+
     await sendPasswordResetEmail(account, origin);
 }
 
